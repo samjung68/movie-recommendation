@@ -17,10 +17,10 @@ def get_recommendations(title):
     # 코사인 유사도 기준으로 내림차순 정렬
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     
-    # 자기 자신을 제외한 10개의 추천 영화를 슬라이싱
-    sim_scores = sim_scores[1:11]
+    # 자기 자신을 제외한 15개의 추천 영화를 슬라이싱
+    sim_scores = sim_scores[1:16]
     
-    # 추천 영화 목록 10개의 인덱스 정보 추출
+    # 추천 영화 목록 15개의 인덱스 정보 추출
     movie_indices = [i[0] for i in sim_scores]
     
     # 인덱스 정보를 통해 영화 제목 추출
@@ -45,7 +45,7 @@ movies = pickle.load(open('movies.pickle', 'rb'))
 cosine_sim = pickle.load(open('cosine_sim.pickle', 'rb'))
 
 st.set_page_config(layout='wide')
-st.header('Nadoflix')
+st.header("Samjung's 영화 추천 시스템")
 
 movie_list = movies['title'].values
 title = st.selectbox('Choose a movie you like', movie_list)
@@ -54,7 +54,7 @@ if st.button('Recommend'):
         images, titles = get_recommendations(title)
 
         idx = 0
-        for i in range(0, 2):
+        for i in range(0, 3):
             cols = st.columns(5)
             for col in cols:
                 col.image(images[idx])
