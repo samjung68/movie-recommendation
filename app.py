@@ -45,7 +45,9 @@ movies = pickle.load(open('movies.pickle', 'rb'))
 cosine_sim = pickle.load(open('cosine_sim.pickle', 'rb'))
 
 st.set_page_config(layout='wide')
-st.header("Samjung's 영화 추천 시스템")
+
+
+st.header("영화 추천 시스템")
 
 movie_list = movies['title'].values
 title = st.selectbox('Choose a movie you like', movie_list)
@@ -60,3 +62,29 @@ if st.button('Recommend'):
                 col.image(images[idx])
                 col.write(titles[idx])
                 idx += 1
+
+st.header("영화 소개")
+
+# User input for movie title
+movie_title = st.text_input('Enter a movie title:')
+
+if movie_title:
+    # Search for the movie
+    try:
+        movie = Movie()
+        result = movie.search(movie_title)
+
+        # Display movie details
+        if result:
+            selected_movie = result[0]
+            st.write(f"**Title:** {selected_movie.title}")
+            st.write(f"**Overview:** {selected_movie.overview}")
+            st.write(f"**Release Date:** {selected_movie.release_date}")
+            st.write(f"**Popularity:** {selected_movie.popularity}")
+            st.write(f"**Vote Average:** {selected_movie.vote_average}")
+            st.image(f"https://image.tmdb.org/t/p/original{selected_movie.poster_path}", caption=selected_movie.title, use_column_width=True)
+        else:
+            st.warning('Movie not found. Please enter a valid movie title.')
+
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
