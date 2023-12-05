@@ -5,7 +5,7 @@ from tmdbv3api import Movie, TMDb
 movie = Movie()
 tmdb = TMDb()
 tmdb.api_key = '66918e94ee23c9222eb1aa820c03a255'
-tmdb.language = 'ko-KR'
+# tmdb.language = 'ko-KR'
 
 def get_recommendations(title):
     # 영화 제목을 통해서 전체 데이터 기준 그 영화의 index 값을 얻기
